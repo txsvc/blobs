@@ -1,0 +1,109 @@
+<context>
+# Overview  
+The blobs library and CLI provides a unified interface for storing, retrieving, and managing large binary objects (blobs) across multiple cloud storage providers. 
+It integrates with the txsvc ecosystem (stdlib, cloudlib, apikit) to provide enterprise-grade blob storage capabilities with consistent APIs, 
+authentication, and monitoring. The library solves the problem of vendor lock-in and provides abstraction over different cloud storage services 
+while maintaining performance and reliability.
+
+# Core Features  
+- **Multi-Provider Support**: Seamless integration with major cloud storage providers (Google Cloud Storage, AWS S3, Azure Blob Storage)
+- **Unified API**: Consistent interface regardless of underlying storage provider
+- **CLI Tool**: Command-line interface for direct blob operations and management
+- **Authentication Integration**: Leverages existing auth patterns from apikit and cloudlib
+- **Streaming Support**: Efficient handling of large files through streaming upload/download
+- **Metadata Management**: Rich metadata support for blobs including content type, tags, and custom attributes
+- **Monitoring Integration**: Built-in observability using cloudlib's observer patterns
+- **Configuration Management**: Flexible configuration using stdlib's settings patterns
+
+# User Experience  
+- **Developers**: Use the Go library to integrate blob storage into their applications
+- **DevOps/SysAdmins**: Use the CLI for operational tasks and automation
+- **API Users**: Interact with blobs through RESTful APIs when integrated with apikit
+- Key user flows include: upload/download operations, listing and searching blobs, managing metadata, and monitoring storage usage
+</context>
+<PRD>
+# Technical Architecture  
+- **Core Library**: Go package with provider-agnostic interfaces
+- **Provider Implementations**: Separate packages for each cloud provider (Google, AWS, Azure)
+- **CLI Component**: Command-line tool built on top of the core library
+- **Configuration**: JSON/YAML configuration files with environment variable support
+- **Authentication**: Integration with cloudlib auth patterns and provider-specific credentials
+- **Storage Interface**: Abstract interface defining common operations (Put, Get, Delete, List, Exists)
+- **Metadata Store**: Optional local or cloud-based metadata indexing for search capabilities
+- **Streaming Support**: io.Reader/Writer interfaces for efficient large file handling
+
+# Development Roadmap  
+**Phase 1 - Core Foundation**
+- Project structure and build system
+- Core interfaces and types definition
+- Configuration management using stdlib patterns
+- Basic local file system provider for testing
+
+**Phase 2 - Google Cloud Storage Provider**
+- Google Cloud Storage implementation
+- Authentication integration with cloudlib
+- Basic CLI commands (upload, download, list)
+- Comprehensive testing suite
+
+**Phase 3 - Additional Providers**
+- AWS S3 provider implementation
+- Azure Blob Storage provider implementation
+- Provider selection and configuration
+
+**Phase 4 - Advanced Features**
+- Metadata management and search
+- Streaming optimizations
+- Progress reporting and resumable uploads
+- Integration with cloudlib observer for monitoring
+
+**Phase 5 - CLI Enhancement**
+- Advanced CLI commands and flags
+- Batch operations
+- Interactive mode
+- Shell completion
+
+**Phase 6 - Integration & Polish**
+- apikit integration for REST API
+- Documentation and examples
+- Performance optimizations
+- Production readiness
+
+# Logical Dependency Chain
+1. **Foundation First**: Core interfaces, types, and configuration must be established before any provider implementations
+2. **Single Provider MVP**: Complete Google Cloud Storage implementation provides working system that can be tested and validated
+3. **CLI Basics**: Simple CLI operations on top of core library prove the abstraction works
+4. **Provider Expansion**: Additional providers validate the interface design
+5. **Feature Enhancement**: Advanced features build upon solid foundation
+6. **Integration**: apikit and advanced CLI features require stable core
+
+# Risks and Mitigations  
+**Technical Challenges:**
+- Provider API differences: Mitigate with thorough interface design and provider-specific adapters
+- Large file handling: Use streaming interfaces and chunked operations
+- Authentication complexity: Leverage existing cloudlib patterns
+
+**MVP Definition:**
+- Core library with Google Cloud Storage provider
+- Basic CLI with upload/download/list operations
+- Configuration management
+- This provides immediate value and can be built upon incrementally
+
+**Resource Constraints:**
+- Focus on single provider initially
+- Reuse patterns from existing txsvc libraries
+- Prioritize essential features over nice-to-haves
+
+# Appendix  
+**Technical Specifications:**
+- Go 1.21+ compatibility
+- Integration with existing txsvc module patterns
+- Cloud provider SDK dependencies
+- CLI built with standard flag package or cobra
+- Testing with real cloud storage accounts in CI/CD
+
+**Research Findings:**
+- Google Cloud Storage provides most comprehensive Go SDK
+- AWS S3 has broadest adoption and compatibility
+- Azure Blob Storage offers competitive pricing
+- All major providers support similar core operations
+</PRD>

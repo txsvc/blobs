@@ -1,0 +1,8 @@
+{
+  "endpoint": "http://localhost:8080",
+  "credentials": {},
+  "default_scopes": [
+    "api:anonymous"
+  ],
+  "user_agent": "blobs 0.1.0"
+}
